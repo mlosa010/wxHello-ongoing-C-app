@@ -22,9 +22,9 @@ IMPLEMENT_APP(testing_2App);
 
 bool testing_2App::OnInit()
 {
-    testing_2Frame* frame = new testing_2Frame(0L, _("wxWidgets Application Template"));
+    testing_2Frame* frame = new testing_2Frame(0L, _("Manny's text Editor"));
     frame->SetIcon(wxICON(aaaa)); // To Set App Icon
     frame->Show();
-    
+
     return true;
 }

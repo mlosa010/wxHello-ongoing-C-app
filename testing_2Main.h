@@ -26,14 +26,21 @@ class testing_2Frame: public wxFrame
         {
             idMenuQuit = 1000,
             idMenuAbout,
+            idMenuOpen,
+            idMenuSave,
             ID_TextBox
         };
 
         wxTextCtrl*textControl;
+        wxFileDialog*openDialog;
+        wxFileDialog* saveDialog;
+
 
         void OnClose(wxCloseEvent& event);
         void OnQuit(wxCommandEvent& event);
+        void OnOpen(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
+        void OnSave(wxCommandEvent& event);
         DECLARE_EVENT_TABLE()
 };
 

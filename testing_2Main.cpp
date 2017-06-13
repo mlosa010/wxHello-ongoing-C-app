@@ -48,7 +48,10 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 BEGIN_EVENT_TABLE(testing_2Frame, wxFrame)
     EVT_CLOSE(testing_2Frame::OnClose)
     EVT_MENU(idMenuQuit, testing_2Frame::OnQuit)
+    EVT_MENU(idMenuOpen, testing_2Frame::OnOpen)
     EVT_MENU(idMenuAbout, testing_2Frame::OnAbout)
+    EVT_MENU(idMenuSave, testing_2Frame::OnSave)
+
 END_EVENT_TABLE()
 
 testing_2Frame::testing_2Frame(wxFrame *frame, const wxString& title)
@@ -58,7 +61,10 @@ testing_2Frame::testing_2Frame(wxFrame *frame, const wxString& title)
     // create a menu bar
     wxMenuBar* mbar = new wxMenuBar();
     wxMenu* fileMenu = new wxMenu(_T(""));
+    fileMenu->Append(idMenuOpen, _("&Open\tAlt-F4"),_("Quit the application"));
     fileMenu->Append(idMenuQuit, _("&Quit\tAlt-F4"), _("Quit the application"));
+    fileMenu->Append(idMenuOpen, _("&Open\tAlt-F5"), _("Open a file"));
+    fileMenu->Append(idMenuSave,_("Open\tAlt-F6"), _("save a file"));
     mbar->Append(fileMenu, _("&File"));
 
     wxMenu* helpMenu = new wxMenu(_T(""));
@@ -102,3 +108,33 @@ void testing_2Frame::OnAbout(wxCommandEvent &event)
     wxString msg = wxbuildinfo(long_f);
     wxMessageBox(msg, _("Welcome to..."));
 }
+void testing_2Frame::OnOpen(wxCommandEvent &event)
+{
+    wxFileDialog *openDialog = new wxFileDialog(this, wxT("choose a file"),wxT(""),wxT(""),
+wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp|Header Files (*.h)|*.h"),
+wxFD_OPEN );
+
+int response = openDialog->ShowModal(); //get response from the dialog
+    if(response == wxID_OK)
+        { //if response ok, then load contents into textControl
+        this->textControl->LoadFile(openDialog->GetPath());
+        }
+
+
+}
+void testing_2Frame::OnSave(wxCommandEvent &event)
+{
+    wxFileDialog *saveDialog = new wxFileDialog(this, wxT("Choose a file"), wxT(""), wxT(""),
+wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp|Header Files (*.h)|*.h"),
+wxFD_SAVE );
+
+int response = saveDialog->ShowModal(); //get response from the dialog
+
+if(response == wxID_OK)
+ { //if response ok, then load contents into textControl
+ this->textControl->SaveFile(saveDialog->GetPath());
+ }
+
+
+}
+
